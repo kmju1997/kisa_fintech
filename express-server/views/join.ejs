@@ -31,9 +31,22 @@
     </button>
     <script>
         $("#sndButton").click(function () {
-            var name = $("#name").val();
-            var age = $("age").val();
-            var phone = $("#phone").val();
+            var input_name = $("#name").val();
+            var input_age = $("#age").val();
+            var input_phone = $("#phone").val();
+            $.ajax({
+                url : 'http://localhost:3000/userJoin',
+                type :'POST',
+                dataType: 'JSON',
+                data:{
+                    nameajax: input_name,
+                    phoneajax: input_phone,
+                    ageajax: input_age
+                },
+                success : function(response){
+                    console.log(response);
+                }
+            }); //ajax 이용하여 프론트 -> 서버 전송
             console.log(name, age, phone);
         })
     </script>

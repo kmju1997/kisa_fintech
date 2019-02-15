@@ -3,6 +3,7 @@ var app = express();
 var path = require('path')
 var request = require('request')
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -10,7 +11,12 @@ var connection = mysql.createConnection({
     password: 'root', //파일로 따로 관리
     database: 'kisafintech'
 });
+
 connection.connect();
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+//request string parsing 해줌 
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -31,14 +37,28 @@ app.get('/ejsTest', function (req, res) {
 })
 
 app.post('/userJoin', function (req, res) {
-    var name = req.body.name;
-    var phone = req.body.phone;
-    var age = req.body.age;
+    var name = req.body.nameajax;
+    var phone = req.body.phoneajax;
+    var age = req.body.ageajax;
+
+    connection.query('INSERT INTO user (name, user_id, user_password) VALUES (?,?,?)', [name, phone, age], 
+    function(err, result){
+        if(err){
+            throw err
+        }
+        else{
+            console.log("DATA INPUT")
+        }
+    })
+
+    console.log(name, phone, age)
 })
 
 app.get('/join', function(req, res){
     res.render('join')
 })
 
-
+app.get('/design', function(req, res){
+    res.render('designed')
+})
 app.listen(3000)
