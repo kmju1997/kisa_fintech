@@ -32,9 +32,7 @@ for (i = 1; i < 3; i++) {
     })
 }
 
-app.get('/ejsTest', function (req, res) {
-    res.render('index')
-})
+//
 
 app.post('/userJoin', function (req, res) {
     var name = req.body.nameajax;
@@ -58,6 +56,7 @@ app.get('/join', function(req, res){
     res.render('join')
 })
 
+//jquery ajax 이용 data 입력  
 app.get('/design', function(req, res){
     res.render('designed')
 })
